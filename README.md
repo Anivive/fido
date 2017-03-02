@@ -1,5 +1,6 @@
 # fido
 After Effects extension to export Compositions to JSON
+
 ![Extension](extension/screenshot.gif)
 
 

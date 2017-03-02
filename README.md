@@ -14,3 +14,4 @@ After Effects extension to export Compositions to JSON
 * **Asset Path** is the location assets are saved to, in their appropriate folders (assetPath/images, etc.)
 * **Assets** checked will duplicate all used assets into the **Asset Path**
 * **CSS3** will generate CSS3 animation
+* **Retina** divides display/animation properties by 2 if checked. This is meant as an option if the designer has a retina screen and designs to those standards (ie. twice as big). This way the designer can design to retina and not lose quality.

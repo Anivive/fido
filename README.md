@@ -1,11 +1,11 @@
 # fido
-After Effects extension to export Compositions to JSON
+After Effects script to export Compositions to JSON
 
-![Extension](extension/screenshot.gif)
+![Script](script/screenshot.gif)
 
 
 ##### Installation
-* Copy *extension/fido.jsxbin* and paste into *Applications/Adobe After Effects/ScriptUI Panels*
+* Copy *script/fido.jsxbin* and paste into *Applications/Adobe After Effects/ScriptUI Panels*
 * Open *After Effects > Preferences > General* and ensure *Allow Scripts to Write Files and Access Network* is checked
 
 ##### Instructions

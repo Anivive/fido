@@ -1,7 +1,7 @@
 # fido
 After Effects script to export Compositions to JSON
 
-![Script](script/screenshot.gif)
+![Script](script/screenshot.png)
 
 
 ##### Installation
@@ -12,9 +12,8 @@ After Effects script to export Compositions to JSON
 * Open **Fido** in *Window > fido.jsxbin*
 * Add Compositions by highlighting them in the **Project** panel and selecting **Add Composition**
 * Remove Compositions by highlighting them in the **Project** panel and selecting **Remove Composition**
-* **Default Composition** isn't required
 * **JSON Path** is the location the JSON gets saved to
 * **Asset Path** is the location assets are saved to, in their appropriate folders (assetPath/images, etc.)
 * **Assets** checked will duplicate all used assets into the **Asset Path**
 * **CSS3** will generate CSS3 animation
-* **Retina** divides display/animation properties by 2 if checked. This is meant as an option if the designer has a retina screen and designs to those standards (ie. twice as big). This way the designer can design to retina and not lose quality.
+* **Spacing** will divide text letter spacing to match device spacing

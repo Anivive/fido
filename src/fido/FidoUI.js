@@ -160,7 +160,7 @@ FidoUI.prototype.init = function() {
     
     item  = group.add("statictext");
     item.alignment = ["fill", "fill"];
-    item.text      = "Text Multiplier";
+    item.text      = "Spacing";
     
     item  = group.add("edittext");
     item.text = "1";

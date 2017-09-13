@@ -63,7 +63,7 @@ FidoProject.prototype.exportFiles = function(compNames, exportOptions) {
             var n, nTotal = comp.numLayers;
             for(n = 1; n <= nTotal; ++n) {
                 var layer = comp.layer(n);
-                if(layer.enabled) {
+                if(layer.enabled || layer.isTrackMatte) {
                     if(layer instanceof AVLayer) {
                         if(layer.source.mainSource instanceof FileSource) {
                             //

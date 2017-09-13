@@ -101,6 +101,31 @@ function ExportLayer(item, exportOptions) {
             data.type = "text";
             data.content = ExportText( item, exportOptions );
         } else if(item instanceof AVLayer) {
+            if(item.hasTrackMatte) {
+                var prevTransform = exportOptions.prevLayer.property("Transform");
+                data.matte = {
+                    src: getRelativeFilePath( exportOptions.prevLayer.source.mainSource.file.toString() ),
+                    type: 'none',
+                    transform: ExportTransform( prevTransform, exportOptions )
+                };
+                
+                switch(item.trackMatteType) {
+                    case TrackMatteType.ALPHA:
+                        data.matte.type = 'alpha';
+                    break;
+                    case TrackMatteType.ALPHA_INVERTED:
+                        data.matte.type = 'alphaInverted';
+                    break;
+                    case TrackMatteType.LUMA:
+                        data.matte.type = 'luma';
+                    break;
+                    case TrackMatteType.LUMA_INVERTED:
+                        data.matte.type = 'lumaInverted';
+                    break;
+                }
+            } else if(item.isTrackMatte) {
+                data.isTrackMatte = true;
+            }
             if(item.adjustmentLayer) {
                 data.type = "adjustment";
             } else {
@@ -330,7 +355,7 @@ function exportShapeContent(content, exportOptions) {
                 layer.timeline  = exportProps(prop, ["Start", "End", "Offset"], ["start", "end", "offset"], exportOptions);
                 normalizeAnimation("start",  layer);
                 normalizeAnimation("end",    layer);
-                normalizeAnimation("offset", layer, 360 * _retina);
+                normalizeAnimation("offset", layer, 360);
             }
             // Offset
             else if( prop.property("Amount") !== null && prop.property("Line Join") !== null && prop.property("Miter Limit") !== null ) {
@@ -407,10 +432,6 @@ function exportShapeContent(content, exportOptions) {
     return layers;
 }
 
-//is something: Rectangle Path 1
-//Error exporting: Rectangle Path 1, Size :: undefined is not an object
-//Error exporting: Rectangle Path 1, Position
-
 //////////////////////////////////////////////////
 // Layer calls
 
@@ -422,29 +443,44 @@ function ExportEffects(effects, exportOptions) {
         var obj = {
             'name': effect.name,
             'timeline': {}
-            // 'keys': effect.numKeys
         };
         for(var n = 1; n < effect.numProperties; ++n) {
             var prop = effect.property(n);
             if(prop !== undefined && prop !== null && prop.name.length > 0 && prop.value !== undefined) {
-                
-                // obj[ prop.name ] = prop.valueAtTime(1);
                 if(prop.isTimeVarying) {
                     obj[ prop.name ] = prop.keyValue(1);
                     obj.timeline[ prop.name ] = exportPropAni( effect, prop.name, prop.name.toLowerCase(), exportOptions )[0];
-                    // obj[ prop.name ].start = prop.keyValue(1);
-                    // obj[ prop.name ].end   = prop.keyValue(prop.numKeys);
                 } else {
                     obj[ prop.name ] = prop.value;
                 }
             }
         }
-        // if(effect.isTimeVarying) {
-        //     obj['start']     = effect.keyValue(1);
-        //     obj['end']       = effect.keyValue(effect.numKeys);
-        //     // obj['keyframes'] = ExportKeyframes( effect );
-        // }
         a.push( obj );
     }
-    return a;
+    return cleanEffects(a);
+}
+
+function cleanEffects(effects) {
+    var i, total = effects.length, newEffects = [], effect, timeline;
+    for(i = 0; i < total; ++i) {
+        effect = effects[i];
+        if(effect.name === "Gaussian Blur") {
+            timeline = {};
+            if(effect.timeline.Blurriness !== undefined) {
+                timeline.blurriness = effect.timeline.Blurriness;
+            }
+            
+            var direction = [1, 1];
+            var dimensions = effect["Blur Dimensions"];
+            if(dimensions === 2) direction[1] = 0;
+            else if(dimensions === 3) direction[0] = 0;
+            newEffects.push({
+                name: 'Gaussian Blur',
+                timeline: timeline,
+                blurriness: effect.Blurriness,
+                direction: direction
+            })
+        }
+    }
+    return newEffects;
 }

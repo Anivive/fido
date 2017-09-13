@@ -3,23 +3,24 @@ function ExportText(prop, exportOptions) {
     var text  = prop.property("Text");
     var sTxt  = text.property("Source Text");
     var data  = {
-        'text':          sTxt.value.text,
-        'font':          sTxt.value.font,
-        'fontSize':      sTxt.value.fontSize * _retina,
-        'fillColor':     sTxt.value.fillColor,
-        'justification': "left",
-        'spacing':       sTxt.value.tracking * _retina,
-        'weight':        'regular'
+        'text':     sTxt.value.text,
+        'font':     sTxt.value.font,
+        'fontSize': sTxt.value.fontSize * _retina,
+        'color':    sTxt.value.fillColor,
+        'align':    "left",
+        'spacing':  Number((sTxt.value.tracking * _retina / exportOptions.spacingMulti).toFixed(3)),
+        'weight':   'regular'
     };
 
     data.text    = data.text.replace(/\r/g, "\n");
+    data.text    = data.text.replace(/’/g, "'");
 
     var isLeft   = sTxt.value.justification == ParagraphJustification.LEFT_JUSTIFY;
     var isRight  = sTxt.value.justification == ParagraphJustification.RIGHT_JUSTIFY;
     var isCenter = sTxt.value.justification == ParagraphJustification.CENTER_JUSTIFY;
     if(!isLeft) {
-        if(isRight)  data.justification = "right";
-        if(isCenter) data.justification = "center";
+        if(isRight)  data.align = "right";
+        if(isCenter) data.align = "center";
     }
     
     var aeNames   = ["Source Text"];

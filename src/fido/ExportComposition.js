@@ -36,6 +36,9 @@ function ExportComposition(item, exportOptions) {
                     }
                     // alert("Markers complete");
                 } else {
+                    if(i > 1) {
+                        exportOptions.prevLayer = item.layer(i-1);
+                    }
                     layer = ExportLayer( l, exportOptions );
                     if(layer !== undefined) {
                         layer.duration = Math.min(layer.duration, data.duration);

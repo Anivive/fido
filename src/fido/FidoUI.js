@@ -8,11 +8,12 @@ function FidoUI(context) {
     this.txtDataPath = undefined;
     this.btnJSONPath = undefined;
     this.txtJSONPath = undefined;
+    this.txtTxtMulti = undefined;
     this.btnExport   = undefined;
     // this.tgAnimate   = undefined;
     this.tgAssets    = undefined;
     this.tgCSS       = undefined;
-    this.tgRetina    = undefined;
+    // this.tgRetina    = undefined;
     // this.tgEffects   = undefined;
     //
     this.defaultCompTxt = "Default Composition: ";
@@ -157,10 +158,18 @@ FidoUI.prototype.init = function() {
     item.value     = false;
     this.tgCSS     = item;
     
-    item  = group.add("checkbox", undefined, "Retina");
-    item.alignment = ["fill","fill"];
-    item.value     = false;
-    this.tgRetina  = item;
+    item  = group.add("statictext");
+    item.alignment = ["fill", "fill"];
+    item.text      = "Text Multiplier";
+    
+    item  = group.add("edittext");
+    item.text = "1";
+    this.txtTxtMulti = item;
+    
+    // item  = group.add("checkbox", undefined, "Retina");
+    // item.alignment = ["fill","fill"];
+    // item.value     = false;
+    // this.tgRetina  = item;
     
 
     // item  = group.add("checkbox", undefined, "Effects");

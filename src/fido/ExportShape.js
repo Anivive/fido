@@ -160,7 +160,6 @@ function ExportShape(prop, exportOptions) {
         'name':      prop.name,
         'type':      'shape',
         'path':      {},
-        'blend':     blend.value,
         'transform': ExportTransform( transform, exportOptions )
     };
     //

@@ -38,7 +38,8 @@ function ExportLayer(item, exportOptions) {
         "start":     item.inPoint,
         "duration":  item.outPoint - item.inPoint,
         "transform": ExportTransform( transform, exportOptions ),
-        "content":   []
+        "content":   [],
+        "trackMatte": item.hasTrackMatte ? getTrackMatte(item.trackMatteType) : 'none'
     };
     
     if(item instanceof CameraLayer) {
@@ -233,6 +234,7 @@ function exportShapeContent(content, exportOptions) {
                 layer.type          = "stroke";
                 layer.content       = undefined;
                 layer.value = {
+                    blend:      getBlendmode(prop.property("Blend Mode").valueAtTime(0, false)),
                     color:      prop.property("Color").valueAtTime(0, false),
                     opacity:    prop.property("Opacity").valueAtTime(0, false) / 100,
                     width:      prop.property("Stroke Width").valueAtTime(0, false) * _retina,
@@ -290,6 +292,7 @@ function exportShapeContent(content, exportOptions) {
                 layer.type          = "fill";
                 layer.content       = undefined;
                 layer.value = {
+                    blend:      getBlendmode(prop.property("Blend Mode").valueAtTime(0, false)),
                     color:      prop.property("Color").valueAtTime(0, false),
                     opacity:    prop.property("Opacity").valueAtTime(0, false) / 100
                 };

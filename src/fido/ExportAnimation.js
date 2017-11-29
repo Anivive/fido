@@ -639,13 +639,13 @@ function exportPropAni(prop, name, cName, exportOptions) {
     var normalize = cName === "scale" || cName === "opacity";
     var i, total = 0;
     var applyRetina = false;
+    
     switch(cName) {
         case "anchor":
         case "position":
         case "width":
         case "dash":
         case "gap":
-        case "offset":
         case "innerRadius":
         case "outerRadius":
             applyRetina = true;

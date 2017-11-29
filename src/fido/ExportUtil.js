@@ -51,6 +51,228 @@ function getContentType(path) {
     return 'noType';
 }
 
+function getBlendmode(blend) {
+  switch(blend) {
+    case 1:
+      return 'normal';
+    break;
+    
+    case 3:
+      return 'darken';
+    break;
+    case 4:
+      return 'multiply';
+    break;
+    case 5:
+      return 'colorBurn';
+    break;
+    case 6:
+      return 'linearBurn';
+    break;
+    case 7:
+      return 'darkenColor';
+    break;
+    
+    case 9:
+      return 'lighten';
+    break;
+    case 10:
+      return 'screen';
+    break;
+    case 11:
+      return 'colorDodge';
+    break;
+    case 12:
+      return 'linearDodge';
+    break;
+    case 13:
+      return 'lighterColor';
+    break;
+    
+    case 15:
+      return 'overlay';
+    break;
+    case 16:
+      return 'softLight';
+    break;
+    case 17:
+      return 'hardLight';
+    break;
+    case 18:
+      return 'linearLight';
+    break;
+    case 19:
+      return 'vividLight';
+    break;
+    case 20:
+      return 'pinLight';
+    break;
+    case 21:
+      return 'hardMix';
+    break;
+    
+    case 23:
+      return 'difference';
+    break;
+    case 24:
+      return 'exclusion';
+    break;
+    
+    case 26:
+      return 'hue';
+    break;
+    case 27:
+      return 'saturation';
+    break;
+    case 28:
+      return 'color';
+    break;
+    case 29:
+      return 'luminosity';
+    break;
+  }
+  return 'unknown';
+}
+
+function getAVBlendmode(blend) {
+  switch(blend) {
+    case BlendingMode.ADD:
+      return 'add';
+    break;
+    case BlendingMode.ALPHA_ADD:
+      return 'alphaAdd';
+    break;
+    case BlendingMode.CLASSIC_COLOR_BURN:
+      return 'classicColorBurn';
+    break;
+    case BlendingMode.CLASSIC_COLOR_DODGE:
+      return 'classicColorDodge';
+    break;
+    case BlendingMode.CLASSIC_DIFFERENCE:
+      return 'classicDifference';
+    break;
+    case BlendingMode.COLOR:
+      return 'color';
+    break;
+    case BlendingMode.COLOR_BURN:
+      return 'colorBurn';
+    break;
+    case BlendingMode.COLOR_DODGE:
+      return 'colorDodge';
+    break;
+    case BlendingMode.DANCING_DISSOLVE:
+      return 'dancingDissolve';
+    break;
+    case BlendingMode.DARKEN:
+      return 'darken';
+    break;
+    case BlendingMode.DARKER_COLOR:
+      return 'darkenColor';
+    break;
+    case BlendingMode.DIFFERENCE:
+      return 'difference';
+    break;
+    case BlendingMode.DISSOLVE:
+      return 'dissolve';
+    break;
+    case BlendingMode.EXCLUSION:
+      return 'exclusion';
+    break;
+    case BlendingMode.HARD_LIGHT:
+      return 'hardLight';
+    break;
+    case BlendingMode.HARD_MIX:
+      return 'hardMix';
+    break;
+    case BlendingMode.HUE:
+      return 'hue';
+    break;
+    case BlendingMode.LIGHTEN:
+      return 'lighten';
+    break;
+    case BlendingMode.LIGHTER_COLOR:
+      return 'lighterColor';
+    break;
+    case BlendingMode.LINEAR_BURN:
+      return 'linearBurn';
+    break;
+    case BlendingMode.LINEAR_DODGE:
+      return 'linearDodge';
+    break;
+    case BlendingMode.LINEAR_LIGHT:
+      return 'linearLight';
+    break;
+    case BlendingMode.LUMINESCENT_PREMUL:
+      return 'luminescentPremul';
+    break;
+    case BlendingMode.LUMINOSITY:
+      return 'luminosity';
+    break;
+    case BlendingMode.MULTIPLY:
+      return 'multiply';
+    break;
+    case BlendingMode.NORMAL:
+      return 'normal';
+    break;
+    case BlendingMode.OVERLAY:
+      return 'overlay';
+    break;
+    case BlendingMode.PIN_LIGHT:
+      return 'pinLight';
+    break;
+    case BlendingMode.SATURATION:
+      return 'saturation';
+    break;
+    case BlendingMode.SCREEN:
+      return 'screen';
+    break;
+    case BlendingMode.SILHOUETE_ALPHA:
+      return 'silhoueteAlpha';
+    break;
+    case BlendingMode.SILHOUETTE_LUMA:
+      return 'silhoueteLuma';
+    break;
+    case BlendingMode.SOFT_LIGHT:
+      return 'softLight';
+    break;
+    case BlendingMode.STENCIL_ALPHA:
+      return 'stencilAlpha';
+    break;
+    case BlendingMode.STENCIL_LUMA:
+      return 'stencilLuma';
+    break;
+    case BlendingMode.VIVID_LIGHT:
+      return 'vividLight';
+    break;
+  }
+  return 'unknown';
+}
+
+function getTrackMatte(trackMatteType) {
+    switch(trackMatteType) {
+        case TrackMatteType.ALPHA:
+            return 'alpha';
+        break;
+        
+        case TrackMatteType.ALPHA_INVERTED:
+            return 'alphaInverted';
+        break;
+        
+        case TrackMatteType.LUMA:
+            return 'luma';
+        break;
+        
+        case TrackMatteType.LUMA_INVERTED:
+            return 'lumaInverted';
+        break;
+        
+        case TrackMatteType.NO_TRACK_MATTE:
+            return 'none';
+        break;
+    }
+    return 'none';
+}
+
 //
 
 function ExportTransform(transform, exportOptions) {
@@ -129,8 +351,9 @@ function ExportTransform(transform, exportOptions) {
         obj.scale = [
             _scale[0] / 100,
             _scale[1] / 100,
-            _scale[2] / 100
+            1
         ];
+        if(_scale.length > 2) obj.scale[2] = _scale[2] / 100;
     }
     
     obj.timeline = [];
@@ -203,8 +426,9 @@ function ExportTransform2D(transform, exportOptions) {
         obj.scale = [
             _scale[0] / 100,
             _scale[1] / 100,
-            _scale[2] / 100
+            1
         ];
+        if(_scale.length > 2) obj.scale[2] = _scale[2] / 100;
     }
     
     obj.timeline = [];

@@ -275,6 +275,9 @@ function exportShapeContent(content, exportOptions) {
                     gap   : dashes.property("Gap").valueAtTime(0, false) * _retina,
                     offset: dashes.property("Offset").valueAtTime(0, false) * _retina
                 };
+                if(layer.value.dashes.gap === 10 * _retina) {
+                    layer.value.dashes.gap = layer.value.dashes.dash;
+                }
                 
                 if(!dashes.isModified) {
                         layer.value.dashes = undefined; // delete, not actually added

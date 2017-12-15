@@ -17,7 +17,7 @@ function ExportComposition(item, exportOptions) {
     for(i = 1; i <= total; ++i) {
         var l = item.layer(i);
         var layer;
-        if(l.enabled) {
+        if(l.enabled || l.isTrackMatte) {
             // data.timeline[ l.name ] = [];
             //
             // if(l.active) {

@@ -11,12 +11,15 @@ function ExportComposition(item, exportOptions) {
         "markers":  []
     };
     
-    exportOptions.duration = item.workAreaDuration;
+    exportOptions.duration = data.duration;
+    exportOptions.nextLayer = undefined;
+    exportOptions.prevLayer = undefined;
     
     var i, total = item.numLayers;
     for(i = 1; i <= total; ++i) {
         var l = item.layer(i);
         var layer;
+        
         if(l.enabled || l.isTrackMatte) {
             // data.timeline[ l.name ] = [];
             //
@@ -36,10 +39,19 @@ function ExportComposition(item, exportOptions) {
                     }
                     // alert("Markers complete");
                 } else {
+                    if(i < total) {
+                        exportOptions.nextLayer = item.layer(i+1);
+                    }
                     if(i > 1) {
                         exportOptions.prevLayer = item.layer(i-1);
                     }
-                    layer = ExportLayer( l, exportOptions );
+                    
+                    try {
+                        layer = ExportLayer( l, exportOptions );
+                    } catch(err) {
+                        alert('layer error: ' + l.name);
+                        return data;
+                    }
                     if(layer !== undefined) {
                         layer.duration = Math.min(layer.duration, data.duration);
                         data.layers.push( layer );

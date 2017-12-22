@@ -32,6 +32,7 @@ function ExportLayer(item, exportOptions) {
     //////////////////////////////////////////////////
     // Export layer
     var transform = item.property("Transform");
+    
     var data      = {
         "name":      item.name.replace(" ", "_"),
         "type":      "",
@@ -105,7 +106,8 @@ function ExportLayer(item, exportOptions) {
             if(item.hasTrackMatte) {
                 var prevTransform = exportOptions.prevLayer.property("Transform");
                 data.matte = {
-                    src: getRelativeFilePath( exportOptions.prevLayer.source.mainSource.file.toString() ),
+                    name: exportOptions.prevLayer != undefined ? exportOptions.prevLayer.name : '',
+                    // src : exportOptions.prevLayer != undefined ? getRelativeFilePath( exportOptions.prevLayer.source.mainSource.file.toString() ) : '',
                     type: 'none',
                     transform: ExportTransform( prevTransform, exportOptions )
                 };
@@ -126,13 +128,18 @@ function ExportLayer(item, exportOptions) {
                 }
             } else if(item.isTrackMatte) {
                 data.isTrackMatte = true;
+                data.trackMatte = exportOptions.nextLayer !== undefined ? exportOptions.nextLayer.name : '';
             }
+            
             if(item.adjustmentLayer) {
                 data.type = "adjustment";
             } else {
                 if(item.source instanceof CompItem) {
                     data.type = "composition";
                     data.content = item.source.name.replace(" ", "_");
+                    
+                    return data;
+                    
                 } else if(item.source instanceof FootageItem) {
                     if(item.source.mainSource instanceof SolidSource) {
                         data.type    = "shape";

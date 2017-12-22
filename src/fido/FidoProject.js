@@ -166,8 +166,12 @@ FidoProject.prototype.exportCompositions = function(compNames, exportOptions) {
         if(index > -1) {
             var item = app.project.items[index];
             if( item instanceof CompItem ) {
-                var comp = ExportComposition( item, exportOptions );
-                if( comp !== null ) this.data.compositions[ comp.name ] = comp;
+                try {
+                    var comp = ExportComposition( item, exportOptions );
+                    if( comp !== null ) this.data.compositions[ comp.name ] = comp;
+                } catch(err) {
+                    alert("Error exporting composition: " + item.name + ", " + i.toString());
+                }
                 // if( comp !== null ) this.data.compositions.push( comp );
             }
         }

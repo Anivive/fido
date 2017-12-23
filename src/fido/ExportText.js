@@ -3,7 +3,7 @@ function ExportText(prop, exportOptions) {
     var text  = prop.property("Text");
     var sTxt  = text.property("Source Text");
     var data  = {
-        'text':     sTxt.value.text,
+        'text':     sTxt.value.allCaps ? sTxt.value.text.toUpperCase() : sTxt.value.text,
         'font':     sTxt.value.font,
         'fontSize': sTxt.value.fontSize * _retina,
         'color':    sTxt.value.fillColor,

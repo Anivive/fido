@@ -13,7 +13,7 @@ function FidoUI(context) {
     // this.tgAnimate   = undefined;
     this.tgAssets    = undefined;
     this.tgCSS       = undefined;
-    // this.tgRetina    = undefined;
+    this.tgRetina    = undefined;
     // this.tgEffects   = undefined;
     //
     this.defaultCompTxt = "Default Composition: ";
@@ -166,10 +166,15 @@ FidoUI.prototype.init = function() {
     item.text = "1";
     this.txtTxtMulti = item;
     
-    // item  = group.add("checkbox", undefined, "Retina");
-    // item.alignment = ["fill","fill"];
-    // item.value     = false;
-    // this.tgRetina  = item;
+    // Retina
+    
+    item  = group.add("statictext");
+    item.alignment = ["fill", "fill"];
+    item.text      = "Retina";
+    
+    item  = group.add("edittext");
+    item.text = "0.5";
+    this.tgRetina = item;
     
 
     // item  = group.add("checkbox", undefined, "Effects");

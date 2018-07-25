@@ -57,7 +57,7 @@ function bezierKeyframes(prop, pName, options) {
         var t2   = prop.keyTime(n);
         var val1 = prop.keyValue(i);
         var val2 = prop.keyValue(n);
-        if(val1 !== val2 && t1 < options.duration) {
+        if(t1 < options.duration) {
             var x1 = 0;
             var x2 = 0;
             var y1 = 0;

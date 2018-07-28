@@ -17,3 +17,4 @@ After Effects script to export Compositions to JSON
 * **Assets** checked will duplicate all used assets into the **Asset Path**
 * **CSS3** will generate CSS3 animation
 * **Spacing** will divide text letter spacing to match device spacing
+* **Retina** will scale the output (0.5 best for webgl, 1 for SVG)

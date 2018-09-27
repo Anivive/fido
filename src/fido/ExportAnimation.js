@@ -826,8 +826,8 @@ function exportProps( prop, aeNames, codeNames, exportOptions ) {
 }
 
 function getKeyframesTransform(transform, exportOptions, is2D) {
-    var aeNames   = ["Anchor Point", "Position", "Scale", "X Rotation", "Y Rotation", "Rotation", "Opacity"];
-    var codeNames = ["anchor", "position", "scale", "rotationX", "rotationY", "rotationZ", "opacity"];
+    var aeNames   = ["Anchor Point", "xPosition", "yPosition", "zPosition", "Scale", "X Rotation", "Y Rotation", "Rotation", "Opacity"];
+    var codeNames = ["anchor", "positionX", "positionY", "positionZ", "scale", "rotationX", "rotationY", "rotationZ", "opacity"];
     if(is2D) {
         aeNames   = ["Anchor Point", "Position", "Scale", "Rotation", "Opacity"];
         codeNames = ["anchor", "position", "scale", "rotationZ", "opacity"];

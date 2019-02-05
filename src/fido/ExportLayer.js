@@ -470,7 +470,8 @@ function ExportEffects(effects, exportOptions) {
         }
         a.push( obj );
     }
-    return cleanEffects(a);
+    // return cleanEffects(a);
+    return a;
 }
 
 function cleanEffects(effects) {

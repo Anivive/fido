@@ -284,6 +284,7 @@ function ExportTransform(transform, exportOptions) {
     var _rotationY   = transform.property("yRotation");
     var _rotationZ   = transform.property("Rotation");
     var _opacity     = transform.property("Opacity");
+    var _orientation = transform.property("Orientation"); // Camera
     var obj          = {
         'anchor':      _anchorPoint.valueAtTime(0, false),
         'position':    _position.valueAtTime(0, false),
@@ -354,6 +355,14 @@ function ExportTransform(transform, exportOptions) {
             1
         ];
         if(_scale.length > 2) obj.scale[2] = _scale[2] / 100;
+    }
+    if(_orientation !== undefined) {
+        obj.orientation = _orientation.valueAtTime(0, false)
+        if(_orientation.numKeys > 0) {
+            _orientation    = _orientation.keyValue(1);
+            obj.orientation = _orientation;
+            if(_orientation.length > 2) obj.orientation.push(_orientation[2]);
+        }
     }
     
     obj.timeline = [];

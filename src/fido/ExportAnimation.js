@@ -838,7 +838,8 @@ function getKeyframesTransform(transform, exportOptions, is2D) {
         "X Rotation",
         "Y Rotation",
         "Z Rotation",
-        "Opacity"
+        "Opacity",
+        "Orientation"
     ];
     var codeNames = [
         "anchor",
@@ -849,7 +850,8 @@ function getKeyframesTransform(transform, exportOptions, is2D) {
         "rotationX",
         "rotationY",
         "rotationZ",
-        "opacity"
+        "opacity",
+        "orientation"
     ];
     if(is2D) {
         aeNames   = ["Anchor Point", "Position", "Scale", "Rotation", "Opacity"];

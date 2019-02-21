@@ -19,7 +19,8 @@ function ExportEllipsePath(path, exportOptions) {
         'width':     rWidth,
         'height':    rHeight,
         'x':         rX,
-        'y':         rY
+        'y':         rY,
+        'timeline':  exportProps( path, ["Size", "Position"], ["size", "position"], exportOptions )
     };
 
     return exportObj;
@@ -28,12 +29,17 @@ function ExportEllipsePath(path, exportOptions) {
 function ExportRectPath(path, exportOptions) {
     // Path Props
     var _retina    = exportOptions.retina;
-    var rDirection = path.property("Shape Direction").value < 3 ? 1 : -1;
-    var rWidth     = path.property("Size").value[0] * _retina;
-    var rHeight    = path.property("Size").value[1] * _retina;
-    var rX         = path.property("Position").value[0] * _retina;
-    var rY         = path.property("Position").value[1] * _retina;
-    var rRound     = path.property("Roundness").value * _retina;
+    var rDirection = path.property("Shape Direction").valueAtTime(0, false) < 3 ? 1 : -1;
+    var rWidth     = path.property("Size").valueAtTime(0, false)[0] * _retina;
+    var rHeight    = path.property("Size").valueAtTime(0, false)[1] * _retina;
+    var rX         = path.property("Position").valueAtTime(0, false)[0] * _retina;
+    var rY         = path.property("Position").valueAtTime(0, false)[1] * _retina;
+    var rRound     = path.property("Roundness").valueAtTime(0, false) * _retina;
+    // var rWidth     = path.property("Size").value[0] * _retina;
+    // var rHeight    = path.property("Size").value[1] * _retina;
+    // var rX         = path.property("Position").value[0] * _retina;
+    // var rY         = path.property("Position").value[1] * _retina;
+    // var rRound     = path.property("Roundness").value * _retina;
 
     // Export
     var exportObj  = {
@@ -44,7 +50,7 @@ function ExportRectPath(path, exportOptions) {
         'height':    rHeight,
         'x':         rX,
         'y':         rY,
-        'timeline':  exportProps( path, ["Size", "Position"], ["size", "position"] )
+        'timeline':  exportProps( path, ["Size", "Position", "Roundness"], ["size", "position", "roundness"], exportOptions )
     };
 
     return exportObj;

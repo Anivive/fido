@@ -8,7 +8,7 @@ function ExportText(prop, exportOptions) {
         'fontSize': sTxt.value.fontSize * _retina,
         'color':    sTxt.value.fillColor,
         'align':    "left",
-        'spacing':  Number((sTxt.value.tracking * _retina / exportOptions.spacingMulti).toFixed(3)),
+        'spacing':  Number((sTxt.value.tracking / exportOptions.spacingMulti).toFixed(3)),
         'weight':   'regular'
     };
 

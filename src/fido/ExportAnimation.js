@@ -651,6 +651,7 @@ function exportPropAni(prop, name, cName, exportOptions) {
         case "gap":
         case "innerRadius":
         case "outerRadius":
+        case "size":
             applyRetina = true;
         break;
     }

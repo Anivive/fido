@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "extendscript-debug",
+      "request": "launch",
+      "name": "Fido",
+      "program": "${workspaceFolder}/src/Fido.jsx",
+      "stopOnEntry": false,
+      "excludes": [
+        "undefined",
+        "builtin",
+        // "Function",
+        "prototype"
+      ],
+    }
+  ]
+}

@@ -261,8 +261,8 @@ FidoUI.prototype.init = function() {
 
     this.window.onClose = function(e) {
         Raven._dispatcher.listenerChain = {};
-        app.cancelTask(taskId);
-        stopServer();
+        // app.cancelTask(taskId);
+        // stopServer();
     }
 
     if(this.window instanceof Window) {

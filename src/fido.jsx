@@ -30,7 +30,6 @@
             "effects":     true,
             "assets":      UI.tgAssets.value,
             "css":         UI.tgCSS.value,
-            // "retina":      0.5, // true
             "retina":      Number(UI.tgRetina.text),
             "spacingMulti": Number(UI.txtTxtMulti.text),
             "dataPath":    UI.txtDataPath.text,
@@ -52,7 +51,6 @@
     // Read Meta Data
     var meta = new FidoMeta();
     meta.init();
-    // meta.read();
 
     // Export project
     Raven.addListener(FidoEvent.EXPORT, function(e) {

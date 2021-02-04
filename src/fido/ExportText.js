@@ -27,13 +27,19 @@ function ExportText(prop, exportOptions) {
     var codeNames = ["text"];
     var timeline = exportProps(prop, aeNames, codeNames, exportOptions);
 
-    // Animating the fill-color
-    var ani1 = text.property("ADBE Text Animators");
-    if (ani1 !== null) {
-        var txtAnimator = ani1.property("ADBE Text Animator");
-        var aniProps = txtAnimator.property("ADBE Text Animator Properties");
-        var aniFillColor = exportProps(aniProps, ["ADBE Text Fill Color"], ["fillColor"], exportOptions);
-        timeline = timeline.concat(aniFillColor);
+    // Animators
+    var animators = text.property("ADBE Text Animators");
+    if (animators !== null) {
+        var txtAnimator = animators.property("ADBE Text Animator");
+        if (txtAnimator !== null) {
+            var aniProps = txtAnimator.property("ADBE Text Animator Properties");
+            // Fill-Color
+            var fillColor = txtAnimator.property("ADBE Text Fill Color");
+            if (fillColor !== null) {
+                var aniFillColor = exportProps(aniProps, ["ADBE Text Fill Color"], ["fillColor"], exportOptions);
+                timeline = timeline.concat(aniFillColor);
+            }
+        }
     }
 
     data.timeline = timeline;

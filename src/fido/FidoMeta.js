@@ -17,7 +17,6 @@ FidoMeta.OPT_EFFECTS   = "optEffects";
 
 FidoMeta.prototype.init = function() {
     var _this = this;
-    var index = 0;
     function saveComp(e) {
         _this.defaultComp = e.params;
         _this.save(FidoMeta.DEFAULT_COMP, _this.defaultComp);

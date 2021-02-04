@@ -453,22 +453,26 @@ function ExportEffects(effects, exportOptions) {
     var i, effect, total = effects.numProperties;
     for(i = 1; i <= total; ++i) {
         effect = effects.property(i);
-        var obj = {
-            'name': effect.name,
-            'timeline': {}
-        };
-        for(var n = 1; n < effect.numProperties; ++n) {
-            var prop = effect.property(n);
-            if(prop !== undefined && prop !== null && prop.name.length > 0 && prop.value !== undefined) {
-                if(prop.isTimeVarying) {
-                    obj[ prop.name ] = prop.keyValue(1);
-                    obj.timeline[ prop.name ] = exportPropAni( effect, prop.name, prop.name.toLowerCase(), exportOptions )[0];
-                } else {
-                    obj[ prop.name ] = prop.value;
-                }
+        if (effect.enabled) {
+            var obj = {
+                'name': effect.name,
+                'timeline': {}
+            };
+            for(var n = 1; n < effect.numProperties; ++n) {
+                var prop = effect.property(n);
+                try {
+                    if (prop.propertyValueType !== PropertyValueType.CUSTOM_VALUE) {
+                        if(prop.isTimeVarying) {
+                            obj[ prop.name ] = prop.keyValue(1);
+                            obj.timeline[ prop.name ] = exportPropAni( effect, prop.name, prop.name.toLowerCase(), exportOptions )[0];
+                        } else {
+                            obj[ prop.name ] = prop.value;
+                        }
+                    }
+                } catch (err) { }
             }
+            a.push( obj );
         }
-        a.push( obj );
     }
     // return cleanEffects(a);
     return a;

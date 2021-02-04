@@ -814,6 +814,7 @@ function exportPropAni(prop, name, cName, exportOptions) {
                 var key = JSON.parse(JSON.stringify(firstKey));
                 key.duration = firstKey.start;
                 key.start = 0;
+                key.target = firstKey.value;
                 key.type = "hold";
                 key.x0 = "0.25";
                 key.y0 = "0.25";
@@ -825,6 +826,8 @@ function exportPropAni(prop, name, cName, exportOptions) {
                 var key = JSON.parse(JSON.stringify(lastKey));
                 key.start = lastKey.start + lastKey.duration;
                 key.duration = exportOptions.duration - key.start;
+                key.value = lastKey.target;
+                key.target = lastKey.target;
                 key.type = "hold";
                 key.x0 = "0.25";
                 key.y0 = "0.25";

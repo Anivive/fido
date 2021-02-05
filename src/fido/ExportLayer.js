@@ -468,6 +468,8 @@ function ExportEffects(effects, exportOptions) {
                         } else {
                             obj[ prop.name ] = prop.value;
                         }
+                    } else {
+                        // Can't animate effect
                     }
                 } catch (err) { }
             }

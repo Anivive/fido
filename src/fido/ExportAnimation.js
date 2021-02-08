@@ -46,101 +46,99 @@ function testProp(prop) {
 
 function bezierKeyframes(prop, pName, options) {
     var keys = [];
-    if(prop.numKeys <= 1) {
-        return keys;
-    }
-    //
-    var i, total = prop.numKeys;
-    for(i = 1; i < total; ++i) {
-        var n    = i + 1;
-        var t1   = prop.keyTime(i);
-        var t2   = prop.keyTime(n);
-        var val1 = prop.keyValue(i);
-        var val2 = prop.keyValue(n);
-        if(t1 < options.duration) {
-            var x1 = 0;
-            var x2 = 0;
-            var y1 = 0;
-            var y2 = 0;
-            var key  = {
-                "type":     "bezier",
-                "value":    val1,
-                "target":   val2,
-                "start":    t1,
-                "duration": t2 - t1,
-                "x0":       x1,
-                "y0":       y1,
-                "x1":       x2,
-                "y1":       y2
-            };
-            //
-            if(prop.propertyValueType !== PropertyValueType.OneD) {
-                if(val1[0] !== val2[0]) {
-                    val1 = val1[0];
-                    val2 = val2[0];
-                } else if(val1[1] !== val2[1]) {
-                    val1 = val1[1];
-                    val2 = val2[1];
-                } else if(val1[2] !== val2[2]) {
-                    val1 = val1[2];
-                    val2 = val2[2];
-                }
-            }
-            //
-            var _min = Math.min(val1, val2);
-            var _max = Math.max(val1, val2);
-            var _range = _max - _min;
-            //
-            var delta_t = t2-t1;
-            var delta   = val2-val1;
-            var avSpeed = Math.abs(delta) / delta_t;
-            x1 = prop.keyOutTemporalEase(i)[0].influence /100;
-            
-            if( prop.keyOutInterpolationType(i) === KeyframeInterpolationType.HOLD ) {
-                // Hold
-                x1 = y1 = 1/6;
-                x2 = y2 = 1 - x1;
-                key.type = "hold";
-            } else {
-                // Ease
-                if( prop.keyOutInterpolationType(i) === KeyframeInterpolationType.LINEAR ) {
-                    x1 = y1 = 1/6;
-                }
-                if( prop.keyInInterpolationType(n) === KeyframeInterpolationType.LINEAR ) {
-                    x2 = y2 = 1 - (1/6);
-                }
-                
-                if( prop.keyOutInterpolationType(i) === KeyframeInterpolationType.LINEAR &&
-                    prop.keyInInterpolationType(n)  === KeyframeInterpolationType.LINEAR ) {
-                    x1 = y1 = 1/6;
-                    x2 = y2 = 1 - x1;
-                    key.type = "linear";
-                } else {
-                    if (val1<val2){//, this should reproduce your website:     
-                        y1 = Math.abs( x1*prop.keyOutTemporalEase(i)[0].speed / avSpeed );
-                        x2 = 1-prop.keyInTemporalEase(n)[0].influence /100;
-                        y2 = 1-(1-x2)*(prop.keyInTemporalEase(n)[0].speed / avSpeed);
-                    } else if (val2<val1){//, to get a curve starting from point [0,1] going to point [1,0], it would be:
-                        y1 = Math.abs( (-x1)*prop.keyOutTemporalEase(i)[0].speed / avSpeed );
-                        x2 = prop.keyInTemporalEase(n)[0].influence /100;
-                        y2 = 1+x2*(prop.keyInTemporalEase(n)[0].speed / avSpeed);
-                        if(y2 > 1) y2 = 2 - y2;
-                        x2 = 1-x2;
-                    } else if (val1==val2){
-                        x1 = prop.keyOutTemporalEase(i)[0].influence /100;  
-                        y1 = Math.abs( (-x1)*prop.keyOutTemporalEase(i)[0].speed / (_range/(t2-t1)) );
-                        x2 = prop.keyInTemporalEase(n)[0].influence /100;
-                        y2 = 1+x2*(prop.keyInTemporalEase(n)[0].speed / (_range/(t2-t1)));
-                        x2 = 1-x2;
+    if (prop.numKeys > 1) {
+        var i, total = prop.numKeys;
+        for(i = 1; i < total; ++i) {
+            var n    = i + 1;
+            var t1   = prop.keyTime(i);
+            var t2   = prop.keyTime(n);
+            var val1 = prop.keyValue(i);
+            var val2 = prop.keyValue(n);
+            if(t1 < options.duration) {
+                var x1 = 0;
+                var x2 = 0;
+                var y1 = 0;
+                var y2 = 0;
+                var key  = {
+                    "type":     "bezier",
+                    "value":    val1,
+                    "target":   val2,
+                    "start":    t1,
+                    "duration": t2 - t1,
+                    "x0":       x1,
+                    "y0":       y1,
+                    "x1":       x2,
+                    "y1":       y2
+                };
+                //
+                if(prop.propertyValueType !== PropertyValueType.OneD) {
+                    if(val1[0] !== val2[0]) {
+                        val1 = val1[0];
+                        val2 = val2[0];
+                    } else if(val1[1] !== val2[1]) {
+                        val1 = val1[1];
+                        val2 = val2[1];
+                    } else if(val1[2] !== val2[2]) {
+                        val1 = val1[2];
+                        val2 = val2[2];
                     }
                 }
+                //
+                var _min = Math.min(val1, val2);
+                var _max = Math.max(val1, val2);
+                var _range = _max - _min;
+                //
+                var delta_t = t2-t1;
+                var delta   = val2-val1;
+                var avSpeed = Math.abs(delta) / delta_t;
+                x1 = prop.keyOutTemporalEase(i)[0].influence /100;
+                
+                if( prop.keyOutInterpolationType(i) === KeyframeInterpolationType.HOLD ) {
+                    // Hold
+                    x1 = y1 = 1/6;
+                    x2 = y2 = 1 - x1;
+                    key.type = "hold";
+                } else {
+                    // Ease
+                    if( prop.keyOutInterpolationType(i) === KeyframeInterpolationType.LINEAR ) {
+                        x1 = y1 = 1/6;
+                    }
+                    if( prop.keyInInterpolationType(n) === KeyframeInterpolationType.LINEAR ) {
+                        x2 = y2 = 1 - (1/6);
+                    }
+                    
+                    if( prop.keyOutInterpolationType(i) === KeyframeInterpolationType.LINEAR &&
+                        prop.keyInInterpolationType(n)  === KeyframeInterpolationType.LINEAR ) {
+                        x1 = y1 = 1/6;
+                        x2 = y2 = 1 - x1;
+                        key.type = "linear";
+                    } else {
+                        if (val1<val2){//, this should reproduce your website:     
+                            y1 = Math.abs( x1*prop.keyOutTemporalEase(i)[0].speed / avSpeed );
+                            x2 = 1-prop.keyInTemporalEase(n)[0].influence /100;
+                            y2 = 1-(1-x2)*(prop.keyInTemporalEase(n)[0].speed / avSpeed);
+                        } else if (val2<val1){//, to get a curve starting from point [0,1] going to point [1,0], it would be:
+                            y1 = Math.abs( (-x1)*prop.keyOutTemporalEase(i)[0].speed / avSpeed );
+                            x2 = prop.keyInTemporalEase(n)[0].influence /100;
+                            y2 = 1+x2*(prop.keyInTemporalEase(n)[0].speed / avSpeed);
+                            if(y2 > 1) y2 = 2 - y2;
+                            x2 = 1-x2;
+                        } else if (val1==val2){
+                            x1 = prop.keyOutTemporalEase(i)[0].influence /100;  
+                            y1 = Math.abs( (-x1)*prop.keyOutTemporalEase(i)[0].speed / (_range/(t2-t1)) );
+                            x2 = prop.keyInTemporalEase(n)[0].influence /100;
+                            y2 = 1+x2*(prop.keyInTemporalEase(n)[0].speed / (_range/(t2-t1)));
+                            x2 = 1-x2;
+                        }
+                    }
+                }
+                //
+                key.x0 = x1;
+                key.y0 = y1;
+                key.x1 = x2;
+                key.y1 = y2;
+                keys.push( key );
             }
-            //
-            key.x0 = x1;
-            key.y0 = y1;
-            key.x1 = x2;
-            key.y1 = y2;
-            keys.push( key );
         }
     }
     return {

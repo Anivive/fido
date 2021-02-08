@@ -71,19 +71,20 @@ FidoProject.prototype.exportFiles = function(compNames, exportOptions) {
                             var file    = getFileObj( source );
                             var type    = file.type;
                             var relativeS  = getRelativeFilePath( file.source );
-                            file = relativeS;
+                            file = file.source;
+                            var fName = relativeS.slice(relativeS.lastIndexOf('/') + 1);
                             
                             if(type === "audio") {
                                 if( !inArray(file, this.data.assets.audio) ) {
-                                    this.data.assets.audio.push( file );
+                                    this.data.assets.audio.push( "audio/" + fName );
                                 }
                             } else if(type === "image") {
                                 if( !inArray(file, this.data.assets.image) ) {
-                                    this.data.assets.image.push( file );
+                                    this.data.assets.image.push( "images/" + fName );
                                 }
                             } else if(type === "video") {
                                 if( !inArray(file, this.data.assets.video) ) {
-                                    this.data.assets.video.push( file );
+                                    this.data.assets.video.push( "video/" + fName );
                                 }
                             }
 

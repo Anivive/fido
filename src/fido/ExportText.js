@@ -34,7 +34,7 @@ function ExportText(prop, exportOptions) {
         if (txtAnimator !== null) {
             var aniProps = txtAnimator.property("ADBE Text Animator Properties");
             // Fill-Color
-            var fillColor = txtAnimator.property("ADBE Text Fill Color");
+            var fillColor = aniProps.property("ADBE Text Fill Color");
             if (fillColor !== null) {
                 var aniFillColor = exportProps(aniProps, ["ADBE Text Fill Color"], ["fillColor"], exportOptions);
                 timeline = timeline.concat(aniFillColor);

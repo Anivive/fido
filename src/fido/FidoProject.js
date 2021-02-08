@@ -67,13 +67,11 @@ FidoProject.prototype.exportFiles = function(compNames, exportOptions) {
                     if(layer instanceof AVLayer) {
                         if(layer.source.mainSource instanceof FileSource) {
                             //
-                            var source = layer.source.mainSource.file.toString(); // original source
-                            //jelly_07.jpg: images/jelly_07.jpg, ~/Pictures/ocean/jelly_07.jpg, image
-                            //grid.png: images/global/grid.png, images/global/grid.png, image
+                            var source = layer.source.mainSource.file.toString();
                             var file    = getFileObj( source );
                             var type    = file.type;
                             var relativeS  = getRelativeFilePath( file.source );
-                            file = file.source;
+                            file = relativeS;
                             
                             if(type === "audio") {
                                 if( !inArray(file, this.data.assets.audio) ) {
@@ -88,27 +86,7 @@ FidoProject.prototype.exportFiles = function(compNames, exportOptions) {
                                     this.data.assets.video.push( file );
                                 }
                             }
-                            // var temp   = source.split("/");
-                            // var fName  = temp[ temp.length-1 ]; // file name
-                            // var relativeS  = getRelativeFilePath( source );
-                            // var isRelative = source.split(app.project.file.parent.absoluteURI).length > 1;
-                            // writeLn( app.project.file.parent.absoluteURI );
-                            // var isRelate = false;
-                            //
-                            // var file = {
-                            //     "name"  : fName,
-                            //     "path"  : relativeS,
-                            //     "source": relativeS
-                            // };
-                            //
-                            // var type = getContentType( relativeS );
-                            // if(type === 'audio') {
-                            //     this.data.assets.audio.push( relativeS );
-                            // } else if(type === 'image') {
-                            //     // if(!isRelative) file.path = "images/" + fName;
-                            //     this.data.assets.image.push( file );
-                            // }
-                            //
+
                             if(exportOptions.assets) {
                                 var folder = "";
                                 switch(type) {

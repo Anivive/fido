@@ -150,7 +150,6 @@ function ExportLayer(item, exportOptions) {
                             'height': item.source.height
                         };
                     } else if(item.source.mainSource instanceof FileSource) {
-                        var source = getRelativeFilePath( item.source.mainSource.file.toString() );
                         data.type  = getType( item.source.mainSource.file.toString() );
                         
                         if(data.type === "audio") {

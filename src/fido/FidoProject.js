@@ -26,8 +26,7 @@ FidoProject.prototype.build = function(compositions, exportOptions) {
         alert("Error exporting compositions");
     }
     
-    // this.data.defaultComp = exportOptions.defaultComp.replace(" ", "_");
-    this.data.build       = createTimestamp();
+    this.data.build = createTimestamp();
     return this.data;
 };
 
@@ -75,16 +74,16 @@ FidoProject.prototype.exportFiles = function(compNames, exportOptions) {
                             var fName = relativeS.slice(relativeS.lastIndexOf('/') + 1);
                             
                             if(type === "audio") {
-                                if( !inArray(file, this.data.assets.audio) ) {
-                                    this.data.assets.audio.push( "audio/" + fName );
+                                if( !inArray(fName, this.data.assets.audio) ) {
+                                    this.data.assets.audio.push(fName);
                                 }
                             } else if(type === "image") {
-                                if( !inArray(file, this.data.assets.image) ) {
-                                    this.data.assets.image.push( "images/" + fName );
+                                if( !inArray(fName, this.data.assets.image) ) {
+                                    this.data.assets.image.push(fName);
                                 }
                             } else if(type === "video") {
-                                if( !inArray(file, this.data.assets.video) ) {
-                                    this.data.assets.video.push( "video/" + fName );
+                                if( !inArray(fName, this.data.assets.video) ) {
+                                    this.data.assets.video.push(fName);
                                 }
                             }
 
@@ -135,6 +134,11 @@ FidoProject.prototype.exportFiles = function(compNames, exportOptions) {
             }
         }
     }
+
+    this.data.assets.audio.sort();
+    this.data.assets.image.sort();
+    this.data.assets.video.sort();
+
     return this;
 };
 

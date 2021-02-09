@@ -51,6 +51,7 @@
     // Read Meta Data
     var meta = new FidoMeta();
     meta.init();
+    meta.read();
 
     // Export project
     Raven.addListener(FidoEvent.EXPORT, function(e) {

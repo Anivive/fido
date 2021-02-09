@@ -806,32 +806,34 @@ function exportPropAni(prop, name, cName, exportOptions) {
         // First / Last keyframes
         for (var i = 0; i < timeline.length; ++i) {
             var lastIndex = timeline[i].keys.length - 1;
-            var firstKey = timeline[i].keys[0];
-            var lastKey = timeline[i].keys[lastIndex];
-            if (firstKey.start > 0) {
-                var key = JSON.parse(JSON.stringify(firstKey));
-                key.duration = firstKey.start;
-                key.start = 0;
-                key.target = firstKey.value;
-                key.type = "hold";
-                key.x0 = "0.25";
-                key.y0 = "0.25";
-                key.x1 = "0.75";
-                key.y1 = "0.75";
-                timeline[i].keys.splice(0, 0, key);
-            }
-            if (lastKey.start + lastKey.duration < exportOptions.duration) {
-                var key = JSON.parse(JSON.stringify(lastKey));
-                key.start = lastKey.start + lastKey.duration;
-                key.duration = exportOptions.duration - key.start;
-                key.value = lastKey.target;
-                key.target = lastKey.target;
-                key.type = "hold";
-                key.x0 = "0.25";
-                key.y0 = "0.25";
-                key.x1 = "0.75";
-                key.y1 = "0.75";
-                timeline[i].keys.push(key);
+            if (lastIndex > -1) {
+                var firstKey = timeline[i].keys[0];
+                var lastKey = timeline[i].keys[lastIndex];
+                if (firstKey.start > 0) {
+                    var key = JSON.parse(JSON.stringify(firstKey));
+                    key.duration = firstKey.start;
+                    key.start = 0;
+                    key.target = firstKey.value;
+                    key.type = "hold";
+                    key.x0 = "0.25";
+                    key.y0 = "0.25";
+                    key.x1 = "0.75";
+                    key.y1 = "0.75";
+                    timeline[i].keys.splice(0, 0, key);
+                }
+                if (lastKey.start + lastKey.duration < exportOptions.duration) {
+                    var key = JSON.parse(JSON.stringify(lastKey));
+                    key.start = lastKey.start + lastKey.duration;
+                    key.duration = exportOptions.duration - key.start;
+                    key.value = lastKey.target;
+                    key.target = lastKey.target;
+                    key.type = "hold";
+                    key.x0 = "0.25";
+                    key.y0 = "0.25";
+                    key.x1 = "0.75";
+                    key.y1 = "0.75";
+                    timeline[i].keys.push(key);
+                }
             }
         }
     }

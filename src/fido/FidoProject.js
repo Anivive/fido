@@ -70,20 +70,23 @@ FidoProject.prototype.exportFiles = function(compNames, exportOptions) {
                             var file    = getFileObj( source );
                             var type    = file.type;
                             var relativeS  = getRelativeFilePath( file.source );
-                            file = file.source;
                             var fName = relativeS.slice(relativeS.lastIndexOf('/') + 1);
                             
                             if(type === "audio") {
-                                if( !inArray(fName, this.data.assets.audio) ) {
-                                    this.data.assets.audio.push(fName);
+                                if( !inArray(relativeS, this.data.assets.audio) ) {
+                                    this.data.assets.audio.push(relativeS);
                                 }
                             } else if(type === "image") {
-                                if( !inArray(fName, this.data.assets.image) ) {
-                                    this.data.assets.image.push(fName);
+                                if( !inArray(relativeS, this.data.assets.image) ) {
+                                    this.data.assets.image.push(relativeS);
                                 }
                             } else if(type === "video") {
-                                if( !inArray(fName, this.data.assets.video) ) {
-                                    this.data.assets.video.push(fName);
+                                if (!inArray(relativeS, this.data.assets.video)) {
+                                    this.data.assets.video.push({
+                                        source: relativeS,
+                                        width: layer.source.width,
+                                        height: layer.source.height
+                                    });
                                 }
                             }
 

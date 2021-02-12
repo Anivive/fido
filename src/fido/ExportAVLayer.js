@@ -4,7 +4,8 @@ function ExportAVLayer(item, exportOptions) {
         // 'source':  getRelativeFilePath( item.source.file.toString() ),
         'source':  file.path,
         'width':   item.width,
-        'height':  item.height
+        'height': item.height,
+        'audioEnabled': item.hasAudio ? item.audioEnabled : false
     };
     return data;
 };

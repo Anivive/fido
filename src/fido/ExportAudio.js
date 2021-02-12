@@ -4,7 +4,8 @@ function ExportAudio(props, exportOptions) {
     var data  = {
         value: {
             source: getRelativeFilePath( props.source.mainSource.file.toString() ),
-            volume: level.value[0]
+            volume: level.value[0],
+            audioEnabled: props.hasAudio ? props.audioEnabled : false
         }
         // "start"   : props.inPoint,
         // "duration": props.outPoint - props.inPoint

@@ -14,6 +14,17 @@ function ExportComposition(item, exportOptions) {
     exportOptions.duration = data.duration;
     exportOptions.nextLayer = undefined;
     exportOptions.prevLayer = undefined;
+
+    // Composition Markers
+    for(var n = 1; n <= item.markerProperty.numKeys; ++n) {
+        var value = item.markerProperty.keyValue(n);
+        var mObj  = {
+            'name'      : value.comment,
+            'time'      : item.markerProperty.keyTime(n),
+            'duration'  : value.duration
+        };
+        data.markers.push( mObj );
+    }
     
     var i, total = item.numLayers;
     for(i = 1; i <= total; ++i) {
@@ -21,62 +32,35 @@ function ExportComposition(item, exportOptions) {
         var layer;
         
         if(l.enabled || l.isTrackMatte) {
-            // data.timeline[ l.name ] = [];
-            //
-            // if(l.active) {
-                if(l.nullLayer) {
-                    var marker = l.property("Marker");
-                    for(var n = 1; n <= marker.numKeys; ++n) {
-                        var value = marker.keyValue(n);
-                        var mObj  = {
-                            'name'      : value.comment,
-                            'time'      : marker.keyTime(n),
-                            'duration'  : value.duration,
-                            'action'    : value.cuePointName,
-                            'params'    : value.getParameters()
-                        };
-                        data.markers.push( mObj );
-                    }
-                    // alert("Markers complete");
-                } else {
-                    if(i < total) {
-                        exportOptions.nextLayer = item.layer(i+1);
-                    }
-                    if(i > 1) {
-                        exportOptions.prevLayer = item.layer(i-1);
-                    }
-                    
-                    try {
-                        layer = ExportLayer( l, exportOptions );
-                    } catch(err) {
-                        alert('layer error: ' + l.name);
-                        return data;
-                    }
-                    if(layer !== undefined) {
-                        layer.duration = Math.min(layer.duration, data.duration);
-                        data.layers.push( layer );
-                    }
-                }
-                // if(layer.timeline.length > 0) {
-                //     data.timeline[ l.name ] = layer.timeline;
-                // }
-            // } else if(l.audioEnabled) {
-            //     // layer = ExportAudio( l );
-            //     // data.layers.push( layer.layer );
-            //     // if(layer.timeline.length > 0) {
-            //     //     data.timeline[ l.name ] = layer.timeline;
-            //     // }
-            // }
+            var marker = l.property("Marker");
+            for(var n = 1; n <= marker.numKeys; ++n) {
+                var value = marker.keyValue(n);
+                var mObj  = {
+                    'name'      : value.comment,
+                    'time'      : marker.keyTime(n),
+                    'duration'  : value.duration
+                };
+                data.markers.push( mObj );
+            }
+            if(i < total) {
+                exportOptions.nextLayer = item.layer(i+1);
+            }
+            if(i > 1) {
+                exportOptions.prevLayer = item.layer(i-1);
+            }
+            
+            try {
+                layer = ExportLayer( l, exportOptions );
+            } catch(err) {
+                alert('layer error: ' + l.name);
+                return data;
+            }
+            if(layer !== undefined) {
+                layer.duration = Math.min(layer.duration, data.duration);
+                data.layers.push( layer );
+            }
         }
     }
-
-    // Remove empty arrays
-    // for(var obj in data.timeline) {
-    //     if( data.timeline[obj].length === 0 ) {
-    //         delete data.timeline[obj];
-    //         data.timeline[obj] = undefined;
-    //     }
-    // }
 
     return data;
 };

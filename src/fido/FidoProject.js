@@ -67,9 +67,9 @@ FidoProject.prototype.exportFiles = function(compNames, exportOptions) {
                         if(layer.source.mainSource instanceof FileSource) {
                             //
                             var source = layer.source.mainSource.file.toString();
-                            var file    = getFileObj( source );
-                            var type    = file.type;
-                            var relativeS  = getRelativeFilePath( file.source );
+                            var file = getFileObj(source);
+                            var type = file.type;
+                            var relativeS = file.path;
                             var fName = relativeS.slice(relativeS.lastIndexOf('/') + 1);
                             
                             if(type === "audio") {
@@ -80,8 +80,16 @@ FidoProject.prototype.exportFiles = function(compNames, exportOptions) {
                                 if( !inArray(relativeS, this.data.assets.image) ) {
                                     this.data.assets.image.push(relativeS);
                                 }
-                            } else if(type === "video") {
-                                if (!inArray(relativeS, this.data.assets.video)) {
+                            } else if (type === "video") {
+                                var videoAdded = false;
+                                for (var d = 0; d < this.data.assets.video.length; ++d) {
+                                    var video = this.data.assets.video[d];
+                                    if (video.source === relativeS) {
+                                        videoAdded = true;
+                                        break;
+                                    }
+                                }
+                                if (!videoAdded) {
                                     this.data.assets.video.push({
                                         source: relativeS,
                                         width: layer.source.width,

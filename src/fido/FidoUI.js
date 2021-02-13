@@ -18,8 +18,8 @@ function FidoUI(context) {
     //
     this.defaultCompTxt = "Default Composition: ";
     //
-    var w = 300;
-    var h = 480;
+    var w = 250;
+    var h = 445;
     if(context instanceof Panel) {
         this.window = context;
     } else {
@@ -73,13 +73,11 @@ FidoUI.prototype.init = function() {
     //////////////////////////////////////////////////
     // Create text / buttons
     var group, item;
-    // var grey = 30 / 255;
-    // this.window.graphics.backgroundColor = this.window.graphics.newBrush( this.window.graphics.BrushType.SOLID_COLOR, [grey, grey, grey, 1] );
     this.window.spacing = 2;
 
     ////////////////////
     // Comps
-    group = this.window.add("group{orientation:'row',alignment:['fill','top']}");
+    group = this.window.add("group{orientation:'row',alignment:'fill'}");
 
     // Add comp
     item  = group.add("button", undefined, "Add Composition");
@@ -104,89 +102,87 @@ FidoUI.prototype.init = function() {
     ////////////////////
     // JSON output
 
-    group = this.window.add("group{orientation:'column',alignment:['fill', 'top'],margins:5}");
-    group.graphics.backgroundColor = group.graphics.newBrush( group.graphics.BrushType.SOLID_COLOR, [0, 0, 0, 0.3] );
-
-    item  = group.add("statictext");
-    item.alignment = ["fill","fill"];
+    item = this.window.add("statictext");
+    item.alignment = "fill";
     item.text = "JSON Path:";
 
+    group = this.window.add("group{orientation:'column',alignment:['fill', 'top'],margins:5}");
+    group.graphics.backgroundColor = group.graphics.newBrush( group.graphics.BrushType.SOLID_COLOR, [0, 0, 0, 0.2] );
+
     item  = group.add("statictext");
-    item.alignment = ["fill","fill"];
+    item.alignment = "fill";
     item.text = "Path: ~/";
     this.txtJSONPath = item;
 
     item  = group.add("button", undefined, "Choose JSON Path");
-    item.alignment = ["fill","top"];
+    item.alignment = "fill";
     this.btnJSONPath = item;
 
     ////////////////////
     // Asset output
-    group = this.window.add("group{orientation:'column',alignment:['fill', 'top'],margins:5}");
-    group.graphics.backgroundColor = group.graphics.newBrush( group.graphics.BrushType.SOLID_COLOR, [0, 0, 0, 0.3] );
-    
-    item  = group.add("statictext");
-    item.alignment = ["fill","fill"];
+
+    item = this.window.add("statictext");
+    item.alignment = "fill";
     item.text = "Asset Path:";
 
+    group = this.window.add("group{orientation:'column',alignment:['fill', 'top'],margins:5}");
+    group.graphics.backgroundColor = group.graphics.newBrush( group.graphics.BrushType.SOLID_COLOR, [0, 0, 0, 0.2] );
+
     item  = group.add("statictext");
-    item.alignment = ["fill","fill"];
+    item.alignment = "fill";
     item.text = "Path: ~/";
     this.txtDataPath = item;
 
     item  = group.add("button", undefined, "Choose Asset Path");
-    item.alignment = ["fill","top"];
+    item.alignment = "fill";
     this.btnDataPath = item;
 
     ////////////////////
     // Toggle buttons
-    group = this.window.add("group{orientation:'row',alignment:['fill', 'top'],margins:5}");
+
+    group = this.window.add("group{orientation:'row',alignment:'fill',margins:5}");
     group.graphics.backgroundColor = group.graphics.newBrush( group.graphics.BrushType.SOLID_COLOR, [0, 0, 0, 0.2] );
 
-    // item  = group.add("checkbox", undefined, "Animation");
-    // item.alignment = ["fill","fill"];
-    // item.value     = true;
-    // this.tgAnimate = item;
-
-    item  = group.add("checkbox", undefined, "Assets");
-    item.alignment = ["fill","fill"];
+    item = group.add("checkbox", undefined, "Assets");
+    item.alignment = ["center", "center"];
     item.value     = false;
     this.tgAssets  = item;
     
-    item  = group.add("checkbox", undefined, "CSS3");
-    item.alignment = ["fill","fill"];
+    item = group.add("checkbox", undefined, "CSS3");
+    item.alignment = ["center", "center"];
     item.value     = false;
-    this.tgCSS     = item;
+    this.tgCSS = item;
     
-    item  = group.add("statictext");
-    item.alignment = ["fill", "fill"];
-    item.text      = "Spacing";
+    ////////////////////
+    // Toggle buttons
+
+    group = this.window.add("group{orientation:'row',alignment:'fill',margins:5}");
+    group.graphics.backgroundColor = group.graphics.newBrush( group.graphics.BrushType.SOLID_COLOR, [0, 0, 0, 0.2] );
     
-    item  = group.add("edittext");
+    item = group.add("statictext");
+    item.alignment = ["center", "center"];
+    item.text = "Spacing";
+    
+    item = group.add("edittext");
+    item.alignment = ["center", "center"];
     item.text = "1";
     this.txtTxtMulti = item;
     
     // Retina
     
-    item  = group.add("statictext");
-    item.alignment = ["fill", "fill"];
-    item.text      = "Retina";
+    item = group.add("statictext");
+    item.text = "Retina";
     
     item  = group.add("edittext");
     item.text = "0.5";
     this.tgRetina = item;
-    
-
-    // item  = group.add("checkbox", undefined, "Effects");
-    // item.alignment = ["fill","fill"];
-    // item.value     = false;
-    // this.tgEffects = item;
 
     ////////////////////
     // Export
-    group = this.window.add("group{orientation:'column',alignment:['fill', 'top']}");
+
+    group = this.window.add("group{orientation:'column',alignment:'fill'}");
     item  = group.add("button", undefined, "Export");
-    item.alignment = ["fill","top"];
+    item.alignment = "fill";
     this.btnExport = item;
 
     //////////////////////////////////////////////////

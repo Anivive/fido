@@ -2,8 +2,12 @@
   "name": "fido_timeline",
   "version": "1.0.0",
   "description": "AE to interactive",
+  "main": "dist/fido-three.js",
   "scripts": {
-    "build": "webpack --progress --profile --colors",
+    "build:core": "APP=core webpack --progress --profile --colors",
+    "build:composition": "APP=composition webpack --progress --profile --colors",
+    "build:three": "APP=three webpack --progress --profile --colors",
+    "build": "npm run build:core && npm run build:composition && npm run build:three",
     "lint": "eslint -c .eslintrc src",
     "lint:fix": "npm run lint --fix",
     "typedoc": "npx typedoc --name Fido --theme minimal"
@@ -17,7 +21,10 @@
     "Effects",
     "Timeline",
     "TypeScript",
-    "Webpack"
+    "Webpack",
+    "fido",
+    "webgl",
+    "animation"
   ],
   "author": "Colin Duffy",
   "license": "ISC",
@@ -51,5 +58,17 @@
     "webpack": "^5.15.0",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.1.14"
+  },
+  "files": [
+    "dist/fido-core.js",
+    "dist/fido-composition.js",
+    "dist/fido-three.js",
+    "src",
+    "package.json",
+    "../LICENSE",
+    "../README.md"
+  ],
+  "directories": {
+    "doc": "docs"
   }
 }

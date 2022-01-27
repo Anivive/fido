@@ -36,7 +36,7 @@
     "layout-bmfont-text": "^1.3.4",
     "polyline-normals": "^2.0.2",
     "quad-indices": "^2.0.1",
-    "three": "^0.124.0"
+    "three": "^0.137.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.33.0",

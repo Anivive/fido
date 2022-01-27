@@ -30,7 +30,7 @@
     "mobile-detect": "^1.4.4",
     "postprocessing": "^6.20.3",
     "stats-js": "^1.0.1",
-    "three": "^0.124.0"
+    "three": "^0.137.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.33.0",
